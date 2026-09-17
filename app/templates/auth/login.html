@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In - MedTrack{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="med-card p-4 p-sm-5 bg-white border shadow">
+                <div class="text-center mb-4">
+                    <div class="rounded-circle bg-primary-soft text-primary d-inline-flex align-items-center justify-content-center p-3 mb-2">
+                        <i class="bi bi-heart-pulse fs-2"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-1">Welcome to MedTrack</h3>
+                    <p class="text-muted small">Sign in to access your healthcare portal</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}">
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-medium small text-dark">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+                            <input type="email" class="form-control border-start-0" id="email" name="email" value="{{ email or '' }}" placeholder="name@medtrack.com" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label for="password" class="form-label fw-medium small text-dark">Password</label>
+                            <span class="small text-muted">Demo: Doctor@123 / Patient@123</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-lock"></i></span>
+                            <input type="password" class="form-control border-start-0" id="password" name="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 d-flex justify-content-between align-items-center">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <label class="form-check-label small text-muted" for="remember">Remember me</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-semibold mb-3 shadow-sm">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                    </button>
+                </form>
+
+                <!-- 1-Click Quick Demo Login Helper -->
+                <div class="p-3 bg-light rounded-3 border mt-3">
+                    <div class="small fw-bold text-muted mb-2 text-center text-uppercase">1-Click Quick Demo Access</div>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-primary btn-sm w-100 rounded-pill" onclick="fillCredentials('doctor@medtrack.com', 'Doctor@123')">
+                                <i class="bi bi-hospital me-1"></i> Doctor Demo
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-secondary btn-sm w-100 rounded-pill" onclick="fillCredentials('patient@medtrack.com', 'Patient@123')">
+                                <i class="bi bi-person me-1"></i> Patient Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4 pt-3 border-top">
+                    <span class="text-muted small">Don't have an account yet?</span>
+                    <a href="{{ url_for('auth.register') }}" class="small fw-bold text-primary text-decoration-none ms-1">Create Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function fillCredentials(email, password) {
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = password;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}About MedTrack - Healthcare Cloud Platform{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="py-5 bg-white border-bottom">
+    <div class="container text-center max-w-700 py-3">
+        <span class="badge bg-primary-soft text-primary px-3 py-2 rounded-pill fw-semibold mb-3">Project Mission</span>
+        <h1 class="display-5 fw-bold text-dark mb-3">About MedTrack</h1>
+        <p class="lead text-muted">
+            A centralized, cloud-enabled healthcare management ecosystem engineered to bridge patients and healthcare practitioners through digital coordination.
+        </p>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <div class="med-card h-100 p-4">
+                    <div class="d-flex align-items-center gap-2 text-danger mb-3">
+                        <i class="bi bi-exclamation-triangle fs-4"></i>
+                        <h4 class="fw-bold mb-0">The Problem</h4>
+                    </div>
+                    <p class="text-muted">
+                        Traditional healthcare interactions are frequently fragmented: appointment confirmations occur via ad-hoc calls, medical histories are paper-bound, and diagnosis reports or prescriptions are easily misplaced. Patients experience anxiety over delays, while physicians lack instantaneous access to patient health logs.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="med-card h-100 p-4 border-primary">
+                    <div class="d-flex align-items-center gap-2 text-primary mb-3">
+                        <i class="bi bi-check2-circle fs-4"></i>
+                        <h4 class="fw-bold mb-0">The MedTrack Solution</h4>
+                    </div>
+                    <p class="text-muted">
+                        MedTrack establishes a single source of truth. Patients book real-time appointments and review their diagnoses. Doctors review structured patient histories, manage daily consult queues, and generate clear digital prescriptions that notify the patient instantly.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Role Benefits -->
+        <h3 class="fw-bold text-center mb-4">Empowering Both Sides of Care</h3>
+        <div class="row g-4 mb-5">
+            <div class="col-lg-6">
+                <div class="med-card p-4 h-100 bg-white">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="stat-icon blue">
+                            <i class="bi bi-person-heart"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0">For Patients</h5>
+                            <span class="small text-muted">Patient-centric control</span>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled d-flex flex-column gap-2 text-muted small">
+                        <li><i class="bi bi-check-lg text-success me-2"></i> Browse verified doctors by medical specialty and credentials.</li>
+                        <li><i class="bi bi-check-lg text-success me-2"></i> Book, reschedule, and track appointment statuses in real time.</li>
+                        <li><i class="bi bi-check-lg text-success me-2"></i> Secure digital storage for pre-existing conditions, allergies, and blood group.</li>
+                        <li><i class="bi bi-check-lg text-success me-2"></i> Access doctor diagnosis reports with dosage and prescription logs anytime.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="med-card p-4 h-100 bg-white">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="stat-icon teal">
+                            <i class="bi bi-hospital"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0">For Doctors</h5>
+                            <span class="small text-muted">Clinical workflow optimization</span>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled d-flex flex-column gap-2 text-muted small">
+                        <li><i class="bi bi-check-lg text-success me-2"></i> Daily appointment agenda organized with live patient status tags.</li>
+                        <li><i class="bi bi-check-lg text-success me-2"></i> Review authorized patient medical profiles prior to consultation.</li>
+                        <li><i class="bi bi-check-lg text-success me-2"></i> Submit structured clinical diagnoses, medications, and dosage instructions.</li>
+                        <li><i class="bi bi-check-lg text-success me-2"></i> Instant trigger of notifications to patient upon report finalization.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- AWS Architecture Roadmap -->
+        <div class="med-card p-4 p-md-5 bg-white border-0 shadow-sm">
+            <div class="text-center max-w-700 mx-auto mb-4">
+                <span class="badge bg-secondary-light text-secondary border px-3 py-2 rounded-pill fw-semibold mb-2">Cloud Roadmap</span>
+                <h3 class="fw-bold">AWS Cloud Architecture</h3>
+                <p class="text-muted small">
+                    MedTrack is designed to progressively leverage enterprise AWS services for maximum uptime, data durability, and HIPAA-conscious security.
+                </p>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="p-3 border rounded-3 bg-light h-100">
+                        <div class="fw-bold text-dark mb-1"><i class="bi bi-hdd-network text-primary me-2"></i>Amazon EC2 & Nginx</div>
+                        <p class="text-muted small mb-0">High-availability application tier hosting the Flask Gunicorn WSGI engine.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded-3 bg-light h-100">
+                        <div class="fw-bold text-dark mb-1"><i class="bi bi-database text-secondary me-2"></i>Amazon DynamoDB</div>
+                        <p class="text-muted small mb-0">NoSQL multi-region database storing user profiles, appointments, and diagnostic logs.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded-3 bg-light h-100">
+                        <div class="fw-bold text-dark mb-1"><i class="bi bi-broadcast text-warning me-2"></i>Amazon SNS</div>
+                        <p class="text-muted small mb-0">Push notification pipeline alerting patients of booking confirmations and prescriptions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded-3 bg-light h-100">
+                        <div class="fw-bold text-dark mb-1"><i class="bi bi-shield-lock text-danger me-2"></i>AWS IAM & VPC</div>
+                        <p class="text-muted small mb-0">Least-privilege role policies and isolated virtual network subnets.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded-3 bg-light h-100">
+                        <div class="fw-bold text-dark mb-1"><i class="bi bi-graph-up text-info me-2"></i>Amazon CloudWatch</div>
+                        <p class="text-muted small mb-0">Real-time telemetry, server logs, latency tracking, and operational alerting.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded-3 bg-light h-100">
+                        <div class="fw-bold text-dark mb-1"><i class="bi bi-globe text-success me-2"></i>Amazon Route 53</div>
+                        <p class="text-muted small mb-0">Global DNS routing providing reliable, low-latency domain name resolution.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

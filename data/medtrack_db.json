@@ -1,0 +1,164 @@
+{
+  "users": {
+    "usr_doc_001": {
+      "id": "usr_doc_001",
+      "name": "Dr. Sarah Jenkins",
+      "email": "doctor@medtrack.com",
+      "phone": "+1 (555) 234-5678",
+      "role": "doctor",
+      "password_hash": "scrypt:32768:8:1$inosAKSwJo4kUvJQ$fe274b58fbbbead90ca9ba89ed4422153384343afc84b8d9dd0ada74c49590d53062f02c9e3713cdf37774e4b674c4e6813b1c9dd2b04d43e33ad57d9bde11d6",
+      "created_at": "2026-09-16 18:39:06"
+    },
+    "usr_doc_002": {
+      "id": "usr_doc_002",
+      "name": "Dr. Robert Chen",
+      "email": "chen@medtrack.com",
+      "phone": "+1 (555) 876-5432",
+      "role": "doctor",
+      "password_hash": "scrypt:32768:8:1$SlWvT8MPhHOZ8ze4$27e00f35e3d21b3df02a93269f8491cbbeca71cbf912315772c3fd1fc2e5b35c9e16d37ae270d870f60169dbf11e155628501ba403e6e07a824b473ceeaad03a",
+      "created_at": "2026-09-16 18:39:06"
+    },
+    "usr_pat_001": {
+      "id": "usr_pat_001",
+      "name": "Madhura Patil",
+      "email": "patient@medtrack.com",
+      "phone": "+1 (555) 901-2345",
+      "role": "patient",
+      "password_hash": "scrypt:32768:8:1$1VR9dqUsRt9CjiDC$ba7537ac7b42c6114d7fe27170b2057cd617cec583ee8c04933d1e7847bf077146917a4d515f475ce43168c4f084c03431fa0b427c22ef2e22c11b2064479927",
+      "created_at": "2026-09-16 18:39:06"
+    }
+  },
+  "doctors": {
+    "usr_doc_001": {
+      "user_id": "usr_doc_001",
+      "specialization": "Cardiology",
+      "experience": 12,
+      "license_no": "MD-CARDIO-8891",
+      "hospital": "MedTrack Heart & Vascular Pavilion",
+      "bio": "Specializing in preventive cardiology, hypertensive management, and clinical echocardiography.",
+      "available_days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "time_slots": [
+        "09:00 AM",
+        "10:00 AM",
+        "11:30 AM",
+        "02:00 PM",
+        "03:30 PM",
+        "04:30 PM"
+      ]
+    },
+    "usr_doc_002": {
+      "user_id": "usr_doc_002",
+      "specialization": "Neurology",
+      "experience": 15,
+      "license_no": "MD-NEURO-4321",
+      "hospital": "MedTrack Neurosciences Institute",
+      "bio": "Expert in neurological disorders, migraine therapy, and cognitive health management.",
+      "available_days": [
+        "Monday",
+        "Wednesday",
+        "Friday"
+      ],
+      "time_slots": [
+        "09:00 AM",
+        "10:00 AM",
+        "11:30 AM",
+        "02:00 PM",
+        "03:30 PM"
+      ]
+    }
+  },
+  "patients": {
+    "usr_pat_001": {
+      "user_id": "usr_pat_001",
+      "date_of_birth": "2002-05-14",
+      "age": 24,
+      "gender": "Female",
+      "blood_group": "O+",
+      "conditions": "Mild seasonal allergic asthma",
+      "medications": "Salbutamol inhaler as needed",
+      "medical_history": "Mild seasonal allergic asthma; no major surgical history.",
+      "emergency_contact": "John Patil (+1 555-901-2346)",
+      "allergies": "Penicillin (moderate rash)"
+    }
+  },
+  "appointments": {
+    "apt_001": {
+      "id": "apt_001",
+      "patient_id": "usr_pat_001",
+      "doctor_id": "usr_doc_001",
+      "date": "2026-09-17",
+      "time_slot": "10:00 AM",
+      "reason": "Routine Cardiovascular Health Check & ECG follow-up",
+      "status": "Confirmed",
+      "status_reason": "",
+      "notes": "Patient requested morning slot.",
+      "created_at": "2026-09-16 18:39:06"
+    },
+    "apt_002": {
+      "id": "apt_002",
+      "patient_id": "usr_pat_001",
+      "doctor_id": "usr_doc_002",
+      "date": "2026-09-11",
+      "time_slot": "02:00 PM",
+      "reason": "Recurrent tension headache and sleep disruption",
+      "status": "Completed",
+      "status_reason": "",
+      "notes": "Diagnosis report generated.",
+      "created_at": "2026-09-11 10:00:00"
+    }
+  },
+  "diagnoses": {
+    "diag_001": {
+      "id": "diag_001",
+      "appointment_id": "apt_002",
+      "patient_id": "usr_pat_001",
+      "doctor_id": "usr_doc_002",
+      "diagnosis": "Episodic Tension-Type Headache with Stress-Related Sleep Onset Latency.",
+      "prescription": "1. Acetaminophen 500mg - 1 tablet orally every 8 hours as needed for severe tension.\n2. Magnesium Glycinate 200mg - 1 capsule at bedtime for 30 days.\n3. Sleep hygiene protocol and reduced blue-light exposure 1 hour prior to sleep.",
+      "additional_notes": "Monitor symptoms in a daily log. If migraines develop with visual auras, return for MRI evaluation.",
+      "follow_up_date": "2026-10-11",
+      "is_read": true,
+      "addenda": [],
+      "created_at": "2026-09-11 15:30:00"
+    }
+  },
+  "notifications": {
+    "notif_001": {
+      "id": "notif_001",
+      "user_id": "usr_pat_001",
+      "title": "Appointment Confirmed",
+      "message": "Your appointment with Dr. Sarah Jenkins has been confirmed for 2026-09-17 at 10:00 AM.",
+      "type": "appointment",
+      "related_id": "apt_001",
+      "is_read": false,
+      "created_at": "2026-09-16 18:39:06"
+    },
+    "notif_002": {
+      "id": "notif_002",
+      "user_id": "usr_pat_001",
+      "title": "New Diagnosis Report Available",
+      "message": "Dr. Robert Chen has finalized and uploaded your clinical diagnosis report.",
+      "type": "diagnosis",
+      "related_id": "diag_001",
+      "is_read": true,
+      "created_at": "2026-09-11 16:00:00"
+    },
+    "notif_003": {
+      "id": "notif_003",
+      "user_id": "usr_doc_001",
+      "title": "Upcoming Patient Appointment",
+      "message": "You have an appointment scheduled with Madhura Patil tomorrow at 10:00 AM.",
+      "type": "appointment",
+      "related_id": "apt_001",
+      "is_read": false,
+      "created_at": "2026-09-16 18:39:06"
+    }
+  },
+  "access_logs": {}
+}

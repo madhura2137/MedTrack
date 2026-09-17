@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account - MedTrack{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="med-card p-4 p-sm-5 bg-white border shadow-sm">
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold text-dark mb-1">Create Your MedTrack Account</h3>
+                    <p class="text-muted small">Select your role to get started with personalized healthcare</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('auth.register') }}">
+                    <!-- Role Toggle Switcher -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase mb-2">Select Your Role</label>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <label class="med-card p-3 d-flex align-items-center gap-3 cursor-pointer border h-100" style="cursor: pointer;">
+                                    <input class="form-check-input mt-0" type="radio" name="role" id="role-patient" value="patient" {% if role != 'doctor' %}checked{% endif %}>
+                                    <div>
+                                        <div class="fw-bold text-dark"><i class="bi bi-person-heart text-primary me-1"></i> Patient</div>
+                                        <div class="smaller text-muted">Book visits & access records</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-6">
+                                <label class="med-card p-3 d-flex align-items-center gap-3 cursor-pointer border h-100" style="cursor: pointer;">
+                                    <input class="form-check-input mt-0" type="radio" name="role" id="role-doctor" value="doctor" {% if role == 'doctor' %}checked{% endif %}>
+                                    <div>
+                                        <div class="fw-bold text-dark"><i class="bi bi-hospital text-info me-1"></i> Doctor</div>
+                                        <div class="smaller text-muted">Manage clinical agenda</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Common Account Fields -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium small">Full Name</label>
+                            <input type="text" class="form-control" name="name" value="{{ form.name if form else '' }}" placeholder="e.g. John Doe" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium small">Email Address</label>
+                            <input type="email" class="form-control" name="email" value="{{ form.email if form else '' }}" placeholder="john@example.com" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-medium small">Phone Number</label>
+                            <input type="tel" class="form-control" name="phone" value="{{ form.phone if form else '' }}" placeholder="+1 (555) 000-0000" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium small">Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Min. 8 characters" minlength="8" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium small">Confirm Password</label>
+                            <input type="password" class="form-control" name="confirm_password" placeholder="Repeat password" minlength="8" required>
+                        </div>
+                    </div>
+
+                    <!-- Patient Specific Fields (Shown when Patient selected per FR-01) -->
+                    <div id="patient-specific-fields" class="p-3 bg-light rounded-3 border mb-4">
+                        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-heart-pulse me-2"></i>Patient Health Profile</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Date of Birth <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" name="date_of_birth" value="{{ form.date_of_birth if form else '' }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Blood Group (Optional)</label>
+                                <select class="form-select" name="blood_group">
+                                    <option value="Unknown">Select Blood Group</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Known Medical Conditions (Optional)</label>
+                                <input type="text" class="form-control" name="conditions" placeholder="e.g. Asthma, Hypertension">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Current Medications (Optional)</label>
+                                <input type="text" class="form-control" name="medications" placeholder="e.g. Daily Inhaler, Metformin">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Known Drug Allergies (Optional)</label>
+                                <input type="text" class="form-control" name="allergies" placeholder="e.g. Penicillin, Sulfa">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Emergency Contact (Optional)</label>
+                                <input type="text" class="form-control" name="emergency_contact" placeholder="Name & Phone">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Specific Fields (Shown when Doctor selected) -->
+                    <div id="doctor-specific-fields" class="p-3 bg-light rounded-3 border mb-4" style="display: none;">
+                        <h6 class="fw-bold text-info mb-3"><i class="bi bi-hospital me-2"></i>Medical Practitioner Credentials</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Specialization</label>
+                                <select class="form-select" name="specialization">
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="General Medicine">General Medicine</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="Dermatology">Dermatology</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Years of Clinical Experience</label>
+                                <input type="number" class="form-control" name="experience" min="1" max="50" value="5">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Medical License / Registration No.</label>
+                                <input type="text" class="form-control" name="license_no" placeholder="e.g. MD-REG-9812">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium small">Hospital / Clinic Affiliation</label>
+                                <input type="text" class="form-control" name="hospital" placeholder="e.g. MedTrack Central Clinic">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-medium small">Professional Bio</label>
+                                <textarea class="form-control" name="bio" rows="2" placeholder="Brief summary of your clinical background and specialties..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-semibold shadow-sm">
+                        <i class="bi bi-check2-circle me-1"></i> Complete Registration
+                    </button>
+
+                    <div class="text-center mt-3">
+                        <span class="text-muted small">Already have an account?</span>
+                        <a href="{{ url_for('auth.login') }}" class="small fw-bold text-primary text-decoration-none ms-1">Sign In</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

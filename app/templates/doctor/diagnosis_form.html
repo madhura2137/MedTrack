@@ -1,0 +1,80 @@
+{% extends 'portal_base.html' %}
+
+{% block title %}Enter Clinical Diagnosis - MedTrack{% endblock %}
+
+{% block portal_content %}
+<div class="mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+        <a href="{{ url_for('doctor.appointments') }}" class="text-muted text-decoration-none small">
+            <i class="bi bi-arrow-left me-1"></i> Appointments
+        </a>
+        <span class="text-muted small">/</span>
+        <span class="small fw-medium text-dark">Clinical Diagnosis</span>
+    </div>
+    <h2 class="fw-bold text-dark mb-1">Diagnosis & Electronic Prescription</h2>
+    <p class="text-muted mb-0">Record your medical assessment and prescribe medication for the patient.</p>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <!-- Patient Consultation Context Card -->
+        <div class="p-3 bg-light rounded-3 border mb-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <div class="small text-muted">Patient:</div>
+                    <div class="fw-bold text-dark fs-6">{{ appt.patient_name }}</div>
+                    <div class="smaller text-muted">{{ appt.patient_age }} yrs • Blood: {{ appt.patient_blood_group }}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="small text-muted">Appointment Date:</div>
+                    <div class="fw-semibold text-dark">{{ appt.date }} at {{ appt.time_slot }}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="small text-muted">Reported Symptoms / Reason:</div>
+                    <div class="text-dark small">{{ appt.reason }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="med-card bg-white p-4 p-md-5 border shadow-sm">
+            <form method="POST" action="{{ url_for('doctor.diagnose', appt_id=appt.id) }}">
+                
+                <!-- Clinical Diagnosis -->
+                <div class="mb-4">
+                    <label for="diagnosis" class="form-label fw-bold text-dark">
+                        <i class="bi bi-stethoscope text-primary me-2"></i>1. Clinical Diagnosis / Medical Assessment
+                    </label>
+                    <textarea class="form-control" id="diagnosis" name="diagnosis" rows="3" placeholder="e.g. Acute Pharyngitis with mild dehydration, Hypertensive Episode, Tension Headache..." required></textarea>
+                    <div class="form-text smaller text-muted">Clearly describe the medical condition, diagnostic impression, or pathology.</div>
+                </div>
+
+                <!-- Prescription (Rx) -->
+                <div class="mb-4">
+                    <label for="prescription" class="form-label fw-bold text-dark">
+                        <span class="text-primary font-monospace fs-5 me-1">℞</span> 2. Prescription & Medication Regimen
+                    </label>
+                    <textarea class="form-control font-monospace" id="prescription" name="prescription" rows="5" placeholder="1. Amoxicillin 500mg - 1 capsule every 8 hours for 7 days
+2. Paracetamol 650mg - 1 tablet as needed for temperature > 100°F
+3. Saline nasal rinse - twice daily" required></textarea>
+                    <div class="form-text smaller text-muted">Specify medication names, strength/dosage, frequency of administration, and treatment duration.</div>
+                </div>
+
+                <!-- Additional Instructions / Notes -->
+                <div class="mb-4">
+                    <label for="notes" class="form-label fw-bold text-dark">
+                        <i class="bi bi-journal-text text-secondary me-2"></i>3. Additional Dietary Advice, Precautions & Follow-Up
+                    </label>
+                    <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Rest for 3 days, drink plenty of fluids, avoid cold drinks. Follow up in 1 week if fever persists."></textarea>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between pt-3 border-top">
+                    <a href="{{ url_for('doctor.appointments') }}" class="btn btn-light rounded-pill px-4">Cancel</a>
+                    <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 fw-semibold shadow-sm">
+                        <i class="bi bi-send-check me-1"></i> Submit Official Diagnosis & Notify Patient
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

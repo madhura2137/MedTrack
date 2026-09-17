@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block title %}MedTrack - Cloud-Enabled Healthcare Management{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="hero-badge">
+                    <i class="bi bi-shield-check"></i> Modern Healthcare Infrastructure
+                </div>
+                <h1 class="hero-title">
+                    Healthcare management <br>
+                    <span class="gradient-text">made simple & secure.</span>
+                </h1>
+                <p class="hero-lead">
+                    MedTrack connects patients and doctors through a unified digital platform. Schedule consultations, track comprehensive medical histories, and access clinical diagnosis reports in real time.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-4 rounded-pill shadow-sm">
+                        <i class="bi bi-person-plus me-1"></i> Get Started
+                    </a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Patient & Doctor Login
+                    </a>
+                </div>
+
+                <!-- Quick highlights -->
+                <div class="row mt-5 pt-3 border-top">
+                    <div class="col-sm-4 mb-2">
+                        <div class="fw-bold text-dark fs-5">Seamless</div>
+                        <div class="small text-muted">Online Appointments</div>
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                        <div class="fw-bold text-dark fs-5">Encrypted</div>
+                        <div class="small text-muted">Digital Medical Records</div>
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                        <div class="fw-bold text-dark fs-5">Cloud Native</div>
+                        <div class="small text-muted">Scalable AWS Backbone</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Hero Card -->
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <div class="med-card bg-white p-4 shadow-lg border-0 position-relative">
+                    <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="p-2 rounded-circle bg-primary-soft text-primary">
+                                <i class="bi bi-activity fs-4"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold">Live Health Monitor</h6>
+                                <span class="small text-muted">Connected Network</span>
+                            </div>
+                        </div>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Online</span>
+                    </div>
+
+                    <!-- Interactive Demo Card -->
+                    <div class="p-3 bg-light rounded-3 mb-3 border">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge badge-confirmed">Upcoming Consultation</span>
+                            <small class="text-muted">Tomorrow 10:30 AM</small>
+                        </div>
+                        <h6 class="fw-bold text-dark mt-2 mb-1">Dr. Sarah Jenkins</h6>
+                        <div class="small text-muted"><i class="bi bi-award me-1"></i> Cardiology Specialist</div>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 mb-4 border">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge badge-completed">Verified Diagnosis</span>
+                            <small class="text-muted">Updated</small>
+                        </div>
+                        <h6 class="fw-bold text-dark mt-2 mb-1">Prescription & Diagnostic Log</h6>
+                        <div class="small text-muted"><i class="bi bi-shield-check me-1 text-success"></i> Signed by licensed physician</div>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-primary w-100 rounded-pill py-2">
+                            Join MedTrack Platform
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Core Features Section -->
+<section class="py-5 bg-white">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <h6 class="text-primary fw-bold text-uppercase tracking-wider">Capabilities</h6>
+            <h2 class="fw-bold">Everything you need for modern care</h2>
+            <p class="text-muted">MedTrack bridges the gap between patient consultations and clinical record handling.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="med-card h-100 p-4 border text-center text-sm-start">
+                    <div class="stat-icon blue mb-3 mx-auto mx-sm-0">
+                        <i class="bi bi-calendar-event"></i>
+                    </div>
+                    <h5 class="fw-bold">Book Appointments</h5>
+                    <p class="text-muted small">
+                        Choose qualified specialists, pick preferred dates and times, and view status changes with instant confirmation alerts.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="med-card h-100 p-4 border text-center text-sm-start">
+                    <div class="stat-icon teal mb-3 mx-auto mx-sm-0">
+                        <i class="bi bi-file-earmark-medical"></i>
+                    </div>
+                    <h5 class="fw-bold">Medical Records</h5>
+                    <p class="text-muted small">
+                        Access continuous clinical history, pre-existing conditions, allergies, and emergency details anytime securely.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="med-card h-100 p-4 border text-center text-sm-start">
+                    <div class="stat-icon purple mb-3 mx-auto mx-sm-0">
+                        <i class="bi bi-prescription2"></i>
+                    </div>
+                    <h5 class="fw-bold">Diagnosis Reports</h5>
+                    <p class="text-muted small">
+                        Physicians generate digital prescriptions and clinical diagnoses immediately after consultation for patient download.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="med-card h-100 p-4 border text-center text-sm-start">
+                    <div class="stat-icon yellow mb-3 mx-auto mx-sm-0">
+                        <i class="bi bi-bell"></i>
+                    </div>
+                    <h5 class="fw-bold">Instant Notifications</h5>
+                    <p class="text-muted small">
+                        Keep both patient and doctor informed with instant updates on bookings, approvals, and newly filed reports.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Available Specialists Section -->
+{% if doctors %}
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+            <div>
+                <h6 class="text-primary fw-bold text-uppercase">Healthcare Network</h6>
+                <h3 class="fw-bold mb-0">Consult with Our Specialists</h3>
+            </div>
+            <a href="{{ url_for('auth.register', role='patient') }}" class="btn btn-outline-primary btn-sm mt-3 mt-md-0 rounded-pill">
+                Book Consultation
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for doc in doctors %}
+            <div class="col-md-6 col-lg-4">
+                <div class="med-card bg-white h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="rounded-circle bg-primary-soft text-primary d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 54px; height: 54px;">
+                                <i class="bi bi-person-check"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0 text-dark">{{ doc.name }}</h6>
+                                <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle">{{ doc.specialization }}</span>
+                            </div>
+                        </div>
+                        <p class="text-muted small mb-2">{{ doc.bio or 'Dedicated specialist providing patient-centered clinical care.' }}</p>
+                        <div class="small text-muted mb-1">
+                            <i class="bi bi-building me-1"></i> {{ doc.hospital }}
+                        </div>
+                        <div class="small text-muted mb-3">
+                            <i class="bi bi-clock-history me-1"></i> {{ doc.experience }} Years Clinical Experience
+                        </div>
+                    </div>
+                    <div class="pt-2 border-top">
+                        <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-primary w-100 rounded-pill">
+                            Book with {{ doc.name.split(' ')[-1] }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Banner -->
+<section class="py-5 bg-primary text-white text-center">
+    <div class="container py-4">
+        <h2 class="fw-bold mb-3">Ready to experience unified healthcare?</h2>
+        <p class="lead mb-4 opacity-90">Create an account in minutes as a patient or doctor.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('auth.register', role='patient') }}" class="btn btn-light btn-lg px-4 rounded-pill text-primary fw-bold shadow">
+                Register as Patient
+            </a>
+            <a href="{{ url_for('auth.register', role='doctor') }}" class="btn btn-outline-light btn-lg px-4 rounded-pill fw-bold">
+                Register as Doctor
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

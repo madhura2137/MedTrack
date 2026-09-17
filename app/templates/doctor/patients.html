@@ -1,0 +1,53 @@
+{% extends 'portal_base.html' %}
+
+{% block title %}Patients Directory - MedTrack{% endblock %}
+
+{% block portal_content %}
+<div class="mb-4">
+    <h2 class="fw-bold text-dark mb-1">Consulted Patients Directory</h2>
+    <p class="text-muted mb-0">Roster of registered patients who have booked or completed consultations under your care.</p>
+</div>
+
+<div class="row g-4">
+    {% if patients %}
+        {% for pat in patients %}
+            <div class="col-md-6 col-lg-4">
+                <div class="med-card bg-white p-4 h-100 d-flex flex-column justify-content-between border">
+                    <div>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="rounded-circle bg-primary-soft text-primary d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 50px; height: 50px;">
+                                {{ pat.name[0] }}
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0">{{ pat.name }}</h6>
+                                <span class="badge bg-light text-muted border">{{ pat.gender }}, {{ pat.age }} yrs</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column gap-2 small text-muted mb-3">
+                            <div><i class="bi bi-droplet text-danger me-1"></i> Blood Group: <strong>{{ pat.blood_group }}</strong></div>
+                            <div><i class="bi bi-telephone me-1 text-primary"></i> {{ pat.phone }}</div>
+                            <div><i class="bi bi-envelope me-1"></i> {{ pat.email }}</div>
+                            <div class="text-truncate"><i class="bi bi-shield-exclamation text-warning me-1"></i> Allergies: {{ pat.allergies or 'None reported' }}</div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-top">
+                        <a href="{{ url_for('doctor.patient_detail', patient_id=pat.id) }}" class="btn btn-outline-primary btn-sm w-100 rounded-pill">
+                            <i class="bi bi-folder2-open me-1"></i> Open Medical Record
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="med-card text-center py-5 bg-white border">
+                <i class="bi bi-people fs-1 text-muted mb-2 d-block"></i>
+                <h5 class="fw-bold text-dark">No Patients Recorded Yet</h5>
+                <p class="text-muted small mb-0">When patients book consultations with you, their medical records will appear here.</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
