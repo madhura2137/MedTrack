@@ -81,3 +81,18 @@
 2026-10-12 22:23:07,631 [INFO] medtrack: 127.0.0.1 - - [12/Oct/2026 22:23:07] "GET / HTTP/1.1" 200 -
 2026-10-12 22:23:18,921 [INFO] medtrack: 127.0.0.1 - - [12/Oct/2026 22:23:18] "GET /login HTTP/1.1" 200 -
 2026-10-12 22:23:18,939 [INFO] medtrack: 127.0.0.1 - - [12/Oct/2026 22:23:18] "GET /search HTTP/1.1" 200 -
+2026-10-12 22:25:45,687 [INFO] medtrack: 127.0.0.1 - - [12/Oct/2026 22:25:45] "GET / HTTP/1.1" 200 -
+2026-10-12 22:27:58,234 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:27:58,459 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-12 22:27:58,539 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:27:58,618 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_7c3c9532)
+2026-10-12 22:27:58,682 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_6dbdc50b)
+2026-10-12 22:27:58,747 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-12 22:27:58,820 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:27:58,823 [INFO] medtrack: Appointment booked: apt_86f48280 (Doctor: usr_doc_001, Patient: usr_pat_001)
+2026-10-12 22:27:58,901 [INFO] medtrack: User signed in: doctor@medtrack.com (doctor)
+2026-10-12 22:27:58,903 [INFO] medtrack: Appointment apt_86f48280 status changed from Pending to Confirmed
+2026-10-12 22:27:58,913 [INFO] medtrack: Diagnosis submitted: diag_ed2a976b for Appointment apt_86f48280
+2026-10-12 22:27:58,915 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
+2026-10-12 22:27:58,991 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:27:59,059 [INFO] medtrack: User signed in: chen@medtrack.com (doctor)
