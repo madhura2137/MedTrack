@@ -2,9 +2,7 @@ import unittest
 import os
 import shutil
 import tempfile
-from app import create_app
-from config import Config
-from app.data_store import DataStore
+from app import create_app, Config, DataStore
 
 class TestMedTrackApp(unittest.TestCase):
     @classmethod

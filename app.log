@@ -1,0 +1,83 @@
+[2026-10-12 22:04:00] INFO in app: MedTrack system initialized.
+2026-10-12 22:19:59,256 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:19:59,468 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-12 22:19:59,546 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:19:59,622 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_bf74fae9)
+2026-10-12 22:19:59,682 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_e77af4cb)
+2026-10-12 22:19:59,743 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-12 22:19:59,810 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:19:59,814 [INFO] medtrack: Appointment booked: apt_a0a08a76 (Doctor: usr_doc_001, Patient: usr_pat_001)
+2026-10-12 22:19:59,887 [INFO] medtrack: User signed in: doctor@medtrack.com (doctor)
+2026-10-12 22:19:59,889 [INFO] medtrack: Appointment apt_a0a08a76 status changed from Pending to Confirmed
+2026-10-12 22:19:59,899 [INFO] medtrack: Diagnosis submitted: diag_8b0c0564 for Appointment apt_a0a08a76
+2026-10-12 22:19:59,901 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
+2026-10-12 22:19:59,969 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:20:19,388 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:20:19,590 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-12 22:20:19,665 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:20:19,739 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_a9f61c6c)
+2026-10-12 22:20:19,801 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_1f23ec8d)
+2026-10-12 22:20:19,860 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-12 22:20:19,927 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:20:19,930 [INFO] medtrack: Appointment booked: apt_2f49849f (Doctor: usr_doc_001, Patient: usr_pat_001)
+2026-10-12 22:20:20,002 [INFO] medtrack: User signed in: doctor@medtrack.com (doctor)
+2026-10-12 22:20:20,005 [INFO] medtrack: Appointment apt_2f49849f status changed from Pending to Confirmed
+2026-10-12 22:20:20,014 [INFO] medtrack: Diagnosis submitted: diag_c3365e6d for Appointment apt_2f49849f
+2026-10-12 22:20:20,016 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
+2026-10-12 22:20:20,086 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:20:42,815 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:20:43,030 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-12 22:20:43,106 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:20:43,180 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_3411213c)
+2026-10-12 22:20:43,243 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_7e698780)
+2026-10-12 22:20:43,311 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-12 22:20:43,376 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:20:43,379 [INFO] medtrack: Appointment booked: apt_8b4afbb8 (Doctor: usr_doc_001, Patient: usr_pat_001)
+2026-10-12 22:20:43,452 [INFO] medtrack: User signed in: doctor@medtrack.com (doctor)
+2026-10-12 22:20:43,455 [INFO] medtrack: Appointment apt_8b4afbb8 status changed from Pending to Confirmed
+2026-10-12 22:20:43,464 [INFO] medtrack: Diagnosis submitted: diag_331bc178 for Appointment apt_8b4afbb8
+2026-10-12 22:20:43,465 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
+2026-10-12 22:20:43,532 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:20:58,128 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:20:58,326 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-12 22:20:58,385 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:20:58,387 [INFO] medtrack: Appointment booked: apt_3e7e7591 (Doctor: usr_doc_001, Patient: usr_pat_001)
+2026-10-12 22:20:58,468 [INFO] medtrack: User signed in: doctor@medtrack.com (doctor)
+2026-10-12 22:20:58,471 [INFO] medtrack: Appointment apt_3e7e7591 status changed from Pending to Confirmed
+2026-10-12 22:20:58,481 [INFO] medtrack: Diagnosis submitted: diag_370e9114 for Appointment apt_3e7e7591
+2026-10-12 22:20:58,483 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
+2026-10-12 22:20:58,550 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:21:08,089 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:21:08,302 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-12 22:21:08,365 [INFO] medtrack: User signed in: chen@medtrack.com (doctor)
+2026-10-12 22:21:39,047 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:21:39,248 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-12 22:21:39,333 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:21:39,405 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_dd1bf187)
+2026-10-12 22:21:39,466 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_effe89f2)
+2026-10-12 22:21:39,525 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-12 22:21:57,992 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:21:58,207 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-12 22:21:58,289 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:21:58,367 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_6624577e)
+2026-10-12 22:21:58,433 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_b7511d5e)
+2026-10-12 22:21:58,498 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-12 22:21:58,569 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:21:58,572 [INFO] medtrack: Appointment booked: apt_005c6717 (Doctor: usr_doc_001, Patient: usr_pat_001)
+2026-10-12 22:21:58,650 [INFO] medtrack: User signed in: doctor@medtrack.com (doctor)
+2026-10-12 22:21:58,653 [INFO] medtrack: Appointment apt_005c6717 status changed from Pending to Confirmed
+2026-10-12 22:21:58,662 [INFO] medtrack: Diagnosis submitted: diag_c478505d for Appointment apt_005c6717
+2026-10-12 22:21:58,664 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
+2026-10-12 22:21:58,739 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-12 22:21:58,811 [INFO] medtrack: User signed in: chen@medtrack.com (doctor)
+2026-10-12 22:23:01,093 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:23:01,171 [INFO] medtrack: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-10-12 22:23:01,171 [INFO] medtrack: [33mPress CTRL+C to quit[0m
+2026-10-12 22:23:01,173 [INFO] medtrack:  * Restarting with stat
+2026-10-12 22:23:01,359 [INFO] medtrack: MedTrack Application initialized.
+2026-10-12 22:23:01,379 [WARNING] medtrack:  * Debugger is active!
+2026-10-12 22:23:01,382 [INFO] medtrack:  * Debugger PIN: 109-284-219
+2026-10-12 22:23:07,631 [INFO] medtrack: 127.0.0.1 - - [12/Oct/2026 22:23:07] "GET / HTTP/1.1" 200 -
+2026-10-12 22:23:18,921 [INFO] medtrack: 127.0.0.1 - - [12/Oct/2026 22:23:18] "GET /login HTTP/1.1" 200 -
+2026-10-12 22:23:18,939 [INFO] medtrack: 127.0.0.1 - - [12/Oct/2026 22:23:18] "GET /search HTTP/1.1" 200 -

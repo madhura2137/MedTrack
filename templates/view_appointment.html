@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointment #{{ appointment.id }} - MedTrack{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="mb-4 d-print-none">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                {% if session.get('role') == 'doctor' %}
+                    <a href="{{ url_for('view_appointment_doctor') }}" class="btn btn-outline-secondary btn-sm rounded-pill">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Schedule
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('view_appointment_patient') }}" class="btn btn-outline-secondary btn-sm rounded-pill">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Appointments
+                    </a>
+                {% endif %}
+            </div>
+            {% if diagnosis %}
+                <button onclick="window.print()" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm">
+                    <i class="bi bi-printer me-1"></i> Print / PDF Prescription
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <!-- Appointment Summary Header Card -->
+        <div class="col-lg-10">
+            <div class="med-card bg-white p-4 mb-4 border shadow-sm">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 border-bottom pb-3 mb-3">
+                    <div>
+                        <span class="badge badge-{{ appointment.status|lower }} px-3 py-1 mb-2">
+                            {{ appointment.status }}
+                        </span>
+                        <h4 class="fw-bold text-dark mb-0">Consultation Overview</h4>
+                        <div class="small text-muted">Appointment Ref: <span class="font-monospace text-uppercase">{{ appointment.id }}</span></div>
+                    </div>
+                    <div class="text-md-end">
+                        <div class="fw-bold text-dark fs-5"><i class="bi bi-calendar3 text-primary me-2"></i>{{ appointment.date }}</div>
+                        <div class="text-muted small"><i class="bi bi-clock me-1 text-primary"></i>{{ appointment.time_slot }}</div>
+                    </div>
+                </div>
+
+                <div class="row g-3 small">
+                    <div class="col-md-4">
+                        <div class="text-muted">Physician:</div>
+                        <strong class="text-dark fs-6">{{ appointment.doctor_name }}</strong>
+                        <div class="text-primary">{{ appointment.doctor_specialization }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-muted">Patient:</div>
+                        <strong class="text-dark fs-6">{{ appointment.patient_name }}</strong>
+                        <div class="text-muted">{{ appointment.patient_age }} yrs • Blood: {{ appointment.patient_blood_group }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-muted">Consultation Reason:</div>
+                        <div class="text-dark fw-medium">{{ appointment.reason }}</div>
+                        {% if appointment.status_reason %}
+                            <div class="text-danger mt-1"><strong>Note:</strong> {{ appointment.status_reason }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- If Diagnosis exists: Show Official Prescription Sheet (Rx) -->
+            {% if diagnosis %}
+                <div class="prescription-sheet bg-white mb-4">
+                    <div class="prescription-header d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+                        <div>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <i class="bi bi-heart-pulse-fill text-danger fs-3"></i>
+                                <span class="fs-4 fw-bold text-primary">MedTrack <span class="text-secondary">Health</span></span>
+                            </div>
+                            <div class="text-muted small">{{ diagnosis.doctor_hospital or 'MedTrack Network' }}</div>
+                        </div>
+
+                        <div class="text-sm-end">
+                            <h5 class="fw-bold text-dark mb-0">{{ diagnosis.doctor_name }}</h5>
+                            <div class="text-primary small fw-semibold">{{ diagnosis.doctor_specialization }}</div>
+                            <div class="text-muted smaller">License: {{ diagnosis.doctor_license or 'MD-VERIFIED' }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Findings -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-uppercase tracking-wider text-muted small mb-2">
+                            <i class="bi bi-stethoscope text-primary me-1"></i> Clinical Diagnosis & Impression
+                        </h6>
+                        <div class="p-3 bg-primary-light border rounded-3 fw-semibold text-dark fs-6">
+                            {{ diagnosis.diagnosis }}
+                        </div>
+                    </div>
+
+                    <!-- Prescription Rx -->
+                    {% if diagnosis.prescription %}
+                        <div class="mb-4">
+                            <div class="d-flex align-items-baseline gap-2 mb-2">
+                                <span class="prescription-rx">℞</span>
+                                <span class="fw-bold text-uppercase tracking-wider text-muted small">Prescribed Medications & Regimen</span>
+                            </div>
+                            <div class="p-4 bg-light border rounded-3 font-monospace small" style="white-space: pre-line; line-height: 1.8;">
+{{ diagnosis.prescription }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Advice & Follow-up -->
+                    <div class="row g-3 mb-4">
+                        {% if diagnosis.additional_notes %}
+                            <div class="col-md-8">
+                                <h6 class="fw-bold text-uppercase tracking-wider text-muted small mb-2">Physician's Guidance & Notes</h6>
+                                <div class="p-3 bg-light border rounded-3 small text-muted" style="white-space: pre-line;">
+{{ diagnosis.additional_notes }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if diagnosis.follow_up_date %}
+                            <div class="col-md-4">
+                                <h6 class="fw-bold text-uppercase tracking-wider text-muted small mb-2">Follow-up Date</h6>
+                                <div class="p-3 bg-light border rounded-3 small fw-bold text-primary">
+                                    <i class="bi bi-calendar-event me-2"></i>{{ diagnosis.follow_up_date }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Addenda (Immutable append-only corrections per FR-08) -->
+                    {% if diagnosis.addenda %}
+                        <div class="mb-4 pt-3 border-top">
+                            <h6 class="fw-bold text-uppercase text-muted small mb-2"><i class="bi bi-journal-plus me-1"></i>Clinical Addenda</h6>
+                            {% for add in diagnosis.addenda %}
+                                <div class="p-3 bg-light border-start border-3 border-secondary rounded-end mb-2 small">
+                                    <div class="fw-semibold text-dark">{{ add.text }}</div>
+                                    <div class="smaller text-muted mt-1">Appended on {{ add.timestamp }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Addenda Form for Consulting Doctor -->
+                    {% if session.get('role') == 'doctor' and session.get('user_id') == appointment.doctor_id %}
+                        <div class="mt-4 pt-3 border-top d-print-none">
+                            <h6 class="fw-bold text-dark small mb-2">Append Clinical Addendum</h6>
+                            <form method="POST" action="{{ url_for('add_diagnosis_addendum', diag_id=diagnosis.id) }}">
+                                <div class="input-group">
+                                    <input type="text" name="addendum_text" class="form-control" placeholder="Add supplementary clinical note or dosage adjustment..." required>
+                                    <button class="btn btn-secondary px-4" type="submit">Append Note</button>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                    <!-- Signature Line -->
+                    <div class="mt-5 pt-4 border-top d-flex justify-content-between align-items-end">
+                        <div class="text-muted smaller">
+                            <i class="bi bi-shield-lock-fill text-success me-1"></i> Electronically signed through MedTrack Core
+                        </div>
+                        <div class="text-center" style="min-width: 180px;">
+                            <div class="fw-bold text-dark font-monospace text-primary border-bottom pb-1 mb-1">
+                                {{ diagnosis.doctor_name }}
+                            </div>
+                            <div class="smaller text-muted">Authorized Physician</div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- If No Diagnosis and Consulting Doctor with Confirmed Status: Show Diagnosis Form -->
+            {% elif session.get('role') == 'doctor' and session.get('user_id') == appointment.doctor_id and appointment.status == 'Confirmed' %}
+                <div class="med-card bg-white p-4 p-md-5 border shadow-sm">
+                    <h5 class="fw-bold text-dark mb-1">
+                        <i class="bi bi-prescription2 text-primary me-2"></i>Formulate Clinical Diagnosis & Prescription
+                    </h5>
+                    <p class="text-muted small mb-4">Complete your medical assessment. Submitting will mark this appointment as Completed and notify the patient.</p>
+
+                    <form method="POST" action="{{ url_for('submit_diagnosis', appointment_id=appointment.id) }}">
+                        <div class="mb-4">
+                            <label for="diagnosis" class="form-label fw-bold text-dark">
+                                <i class="bi bi-stethoscope text-primary me-2"></i>1. Clinical Diagnosis / Finding <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control" id="diagnosis" name="diagnosis" rows="3" placeholder="Enter diagnostic impression, clinical findings, condition identified..." required></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="prescription" class="form-label fw-bold text-dark">
+                                <span class="text-primary font-monospace fs-5 me-1">℞</span> 2. Prescription & Medication Regimen (Optional)
+                            </label>
+                            <textarea class="form-control font-monospace" id="prescription" name="prescription" rows="4" placeholder="1. Medication name, dosage, frequency, course duration..."></textarea>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-8">
+                                <label for="notes" class="form-label fw-bold text-dark">
+                                    <i class="bi bi-journal-text text-secondary me-2"></i>3. Lifestyle Advice / Clinical Notes (Optional)
+                                </label>
+                                <textarea class="form-control" id="notes" name="notes" rows="2" placeholder="Dietary restrictions, rest instructions, warning signs..."></textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="follow_up_date" class="form-label fw-bold text-dark">
+                                    <i class="bi bi-calendar-plus text-primary me-2"></i>4. Follow-up Date (Optional)
+                                </label>
+                                <input type="date" class="form-control" id="follow_up_date" name="follow_up_date">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-3 border-top">
+                            <a href="{{ url_for('view_appointment_doctor') }}" class="btn btn-light rounded-pill px-4">Cancel</a>
+                            <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 fw-semibold shadow-sm">
+                                <i class="bi bi-send-check me-1"></i> Submit Report & Complete Visit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            {% else %}
+                <div class="med-card text-center py-5 bg-white border">
+                    <i class="bi bi-clock-history fs-1 text-muted mb-2 d-block"></i>
+                    <h6 class="fw-bold text-dark mb-1">Awaiting Consultation</h6>
+                    <p class="text-muted small mb-0">The diagnosis report and prescription will be accessible here after the physician completes the consultation.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

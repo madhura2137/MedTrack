@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Doctors & Specialists - MedTrack{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="mb-4">
+        <h2 class="fw-bold text-dark mb-1">Find Doctors & Healthcare Specialists</h2>
+        <p class="text-muted mb-0">Browse through our directory of verified physicians by medical specialization, name, or hospital.</p>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="med-card bg-white p-4 mb-4 border shadow-sm">
+        <form method="GET" action="{{ url_for('search') }}">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-7">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted"><i class="bi bi-search"></i></span>
+                        <input type="text" name="q" class="form-control" value="{{ query or '' }}" placeholder="Search by physician name (e.g. Jenkins) or specialization...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select name="specialization" class="form-select">
+                        <option value="">All Specializations</option>
+                        {% for spec in ['Cardiology', 'Neurology', 'General Medicine', 'Pediatrics', 'Orthopedics', 'Dermatology'] %}
+                            <option value="{{ spec }}" {% if selected_spec == spec %}selected{% endif %}>{{ spec }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill">
+                        Filter
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Results Section -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold text-dark mb-0">Available Physicians</h5>
+        <span class="badge bg-light text-muted border">{{ results|length }} doctor(s) found</span>
+    </div>
+
+    <div class="row g-4">
+        {% if results %}
+            {% for doc in results %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="med-card bg-white p-4 h-100 d-flex flex-column justify-content-between border shadow-sm">
+                        <div>
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="rounded-circle bg-primary-soft text-primary d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 52px; height: 52px;">
+                                    <i class="bi bi-person-badge"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark">{{ doc.name }}</h6>
+                                    <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle">{{ doc.specialization }}</span>
+                                </div>
+                            </div>
+
+                            <p class="text-muted small mb-3">{{ doc.bio or 'Dedicated specialist providing comprehensive patient-centered care.' }}</p>
+
+                            <div class="d-flex flex-column gap-1 small text-muted mb-3">
+                                <div><i class="bi bi-building me-1 text-primary"></i> {{ doc.hospital }}</div>
+                                <div><i class="bi bi-award me-1 text-secondary"></i> {{ doc.experience }} Years Experience</div>
+                                <div><i class="bi bi-shield-check me-1 text-success"></i> License: {{ doc.license_no }}</div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-top">
+                            {% if session.get('user_id') and session.get('role') == 'patient' %}
+                                <a href="{{ url_for('book_appointment', doctor_id=doc.id) }}" class="btn btn-primary btn-sm w-100 rounded-pill">
+                                    <i class="bi bi-calendar-plus me-1"></i> Book Consultation
+                                </a>
+                            {% else %}
+                                <a href="{{ url_for('book_appointment', doctor_id=doc.id) }}" class="btn btn-outline-primary btn-sm w-100 rounded-pill">
+                                    Book Appointment
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="med-card text-center py-5 bg-white border">
+                    <i class="bi bi-search fs-1 text-muted mb-2 d-block"></i>
+                    <h5 class="fw-bold text-dark">No Doctors Found</h5>
+                    <p class="text-muted small mb-3">Try adjusting your search keyword or selecting a different specialization.</p>
+                    <a href="{{ url_for('search') }}" class="btn btn-outline-primary btn-sm rounded-pill px-4">
+                        Reset Search
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

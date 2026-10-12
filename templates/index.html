@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}MedTrack - Cloud-Enabled Healthcare Management{% endblock %}
+{% block title %}Home - MedTrack{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -18,12 +18,22 @@
                 <p class="hero-lead">
                     MedTrack connects patients and doctors through a unified digital platform. Schedule consultations, track comprehensive medical histories, and access clinical diagnosis reports in real time.
                 </p>
+
+                <!-- Search Doctors Bar -->
+                <form action="{{ url_for('search') }}" method="GET" class="mb-4">
+                    <div class="input-group input-group-lg shadow-sm" style="max-width: 540px;">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                        <input type="text" name="q" class="form-control border-start-0" placeholder="Search by doctor name or specialization (e.g. Cardiology)...">
+                        <button class="btn btn-primary px-4 fw-semibold" type="submit">Search</button>
+                    </div>
+                </form>
+
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-4 rounded-pill shadow-sm">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4 rounded-pill shadow-sm">
                         <i class="bi bi-person-plus me-1"></i> Get Started
                     </a>
-                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
-                        <i class="bi bi-box-arrow-in-right me-1"></i> Patient & Doctor Login
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
                     </a>
                 </div>
 
@@ -53,18 +63,18 @@
                                 <i class="bi bi-activity fs-4"></i>
                             </div>
                             <div>
-                                <h6 class="mb-0 fw-bold">Live Health Monitor</h6>
-                                <span class="small text-muted">Connected Network</span>
+                                <h6 class="mb-0 fw-bold">Live Health Portal</h6>
+                                <span class="small text-muted">MedTrack Network</span>
                             </div>
                         </div>
-                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Online</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span>
                     </div>
 
                     <!-- Interactive Demo Card -->
                     <div class="p-3 bg-light rounded-3 mb-3 border">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <span class="badge badge-confirmed">Upcoming Consultation</span>
-                            <small class="text-muted">Tomorrow 10:30 AM</small>
+                            <small class="text-muted">10:00 AM</small>
                         </div>
                         <h6 class="fw-bold text-dark mt-2 mb-1">Dr. Sarah Jenkins</h6>
                         <div class="small text-muted"><i class="bi bi-award me-1"></i> Cardiology Specialist</div>
@@ -80,9 +90,60 @@
                     </div>
 
                     <div class="text-center">
-                        <a href="{{ url_for('auth.register') }}" class="btn btn-primary w-100 rounded-pill py-2">
+                        <a href="{{ url_for('register') }}" class="btn btn-primary w-100 rounded-pill py-2">
                             Join MedTrack Platform
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About MedTrack Section -->
+<section id="about" class="py-5 bg-white border-bottom">
+    <div class="container py-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <span class="badge bg-primary-soft text-primary px-3 py-1 rounded-pill mb-2">Platform Overview</span>
+                <h2 class="fw-bold text-dark mb-3">About MedTrack</h2>
+                <p class="text-muted lead fs-6">
+                    MedTrack is an integrated cloud-ready healthcare management application designed to eliminate fragmented paper records, missed consultations, and delayed diagnosis reporting.
+                </p>
+                <div class="d-flex flex-column gap-2 mt-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span class="text-dark small">Role-scoped patient and doctor authentication with audit logs</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span class="text-dark small">Conflict-free real-time consultation appointment scheduling</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span class="text-dark small">Digital diagnosis reporting and printable clinical prescriptions</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="p-4 bg-light rounded-4 border">
+                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-shield-check text-primary me-2"></i>Secure & Compliant Architecture</h5>
+                    <p class="text-muted small mb-3">
+                        Enforces zero-leakage patient privacy: physicians can only inspect clinical records of patients with confirmed consultation relationships, backed by immutable action logging.
+                    </p>
+                    <div class="row g-2 text-center">
+                        <div class="col-6">
+                            <div class="p-3 bg-white rounded border">
+                                <div class="fw-bold text-primary fs-5">100%</div>
+                                <div class="smaller text-muted">Audited Clinical Access</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-white rounded border">
+                                <div class="fw-bold text-primary fs-5">Real-Time</div>
+                                <div class="smaller text-muted">Status & Alerts</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -160,8 +221,8 @@
                 <h6 class="text-primary fw-bold text-uppercase">Healthcare Network</h6>
                 <h3 class="fw-bold mb-0">Consult with Our Specialists</h3>
             </div>
-            <a href="{{ url_for('auth.register', role='patient') }}" class="btn btn-outline-primary btn-sm mt-3 mt-md-0 rounded-pill">
-                Book Consultation
+            <a href="{{ url_for('search') }}" class="btn btn-outline-primary btn-sm mt-3 mt-md-0 rounded-pill">
+                View All Doctors
             </a>
         </div>
 
@@ -188,7 +249,7 @@
                         </div>
                     </div>
                     <div class="pt-2 border-top">
-                        <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-primary w-100 rounded-pill">
+                        <a href="{{ url_for('book_appointment', doctor_id=doc.id) }}" class="btn btn-sm btn-outline-primary w-100 rounded-pill">
                             Book with {{ doc.name.split(' ')[-1] }}
                         </a>
                     </div>
@@ -206,10 +267,10 @@
         <h2 class="fw-bold mb-3">Ready to experience unified healthcare?</h2>
         <p class="lead mb-4 opacity-90">Create an account in minutes as a patient or doctor.</p>
         <div class="d-flex justify-content-center gap-3">
-            <a href="{{ url_for('auth.register', role='patient') }}" class="btn btn-light btn-lg px-4 rounded-pill text-primary fw-bold shadow">
+            <a href="{{ url_for('register', role='patient') }}" class="btn btn-light btn-lg px-4 rounded-pill text-primary fw-bold shadow">
                 Register as Patient
             </a>
-            <a href="{{ url_for('auth.register', role='doctor') }}" class="btn btn-outline-light btn-lg px-4 rounded-pill fw-bold">
+            <a href="{{ url_for('register', role='doctor') }}" class="btn btn-outline-light btn-lg px-4 rounded-pill fw-bold">
                 Register as Doctor
             </a>
         </div>

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment - MedTrack{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="mb-4">
+        <div class="d-flex align-items-center gap-2 mb-1">
+            <a href="{{ url_for('patient_dashboard') }}" class="text-muted text-decoration-none small">
+                <i class="bi bi-arrow-left me-1"></i> Dashboard
+            </a>
+            <span class="text-muted small">/</span>
+            <span class="small fw-medium text-dark">Book Consultation</span>
+        </div>
+        <h2 class="fw-bold text-dark mb-1">Schedule a Medical Appointment</h2>
+        <p class="text-muted mb-0">Select your preferred healthcare specialist, consultation date, and available time slot.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="med-card bg-white p-4 p-md-5">
+                <form method="POST" action="{{ url_for('book_appointment') }}">
+                    
+                    <!-- Step 1: Select Doctor -->
+                    <div class="mb-4">
+                        <label for="doctor-select" class="form-label fw-bold text-dark">
+                            <i class="bi bi-person-badge text-primary me-2"></i>1. Select Doctor / Specialist
+                        </label>
+                        <select class="form-select form-select-lg" id="doctor-select" name="doctor_id" required>
+                            <option value="">-- Choose a licensed physician --</option>
+                            {% for doc in doctors %}
+                                <option value="{{ doc.id }}" 
+                                        data-spec="{{ doc.specialization }}" 
+                                        data-hospital="{{ doc.hospital }}"
+                                        data-exp="{{ doc.experience }}"
+                                        {% if selected_doctor_id == doc.id %}selected{% endif %}>
+                                    {{ doc.name }} — {{ doc.specialization }} ({{ doc.experience }} yrs exp)
+                                </option>
+                            {% endfor %}
+                        </select>
+                        
+                        <!-- Dynamic Doctor Preview Card -->
+                        <div id="selected-doctor-info" style="display: none;"></div>
+                    </div>
+
+                    <!-- Step 2: Choose Date -->
+                    <div class="mb-4">
+                        <label for="appointment-date" class="form-label fw-bold text-dark">
+                            <i class="bi bi-calendar3 text-primary me-2"></i>2. Preferred Consultation Date
+                        </label>
+                        <input type="date" class="form-control form-control-lg" id="appointment-date" name="date" required>
+                    </div>
+
+                    <!-- Step 3: Choose Time Slot -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark mb-2">
+                            <i class="bi bi-clock text-primary me-2"></i>3. Available Time Slot
+                        </label>
+                        <input type="hidden" name="time_slot" id="time-slot-input" value="10:00 AM">
+                        
+                        <div class="row g-2">
+                            <div class="col-6 col-sm-4">
+                                <button type="button" class="btn btn-outline-primary w-100 py-2 slot-option-btn" data-slot="09:00 AM">09:00 AM</button>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <button type="button" class="btn btn-primary w-100 py-2 slot-option-btn active" data-slot="10:00 AM">10:00 AM</button>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <button type="button" class="btn btn-outline-primary w-100 py-2 slot-option-btn" data-slot="11:30 AM">11:30 AM</button>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <button type="button" class="btn btn-outline-primary w-100 py-2 slot-option-btn" data-slot="02:00 PM">02:00 PM</button>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <button type="button" class="btn btn-outline-primary w-100 py-2 slot-option-btn" data-slot="03:30 PM">03:30 PM</button>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <button type="button" class="btn btn-outline-primary w-100 py-2 slot-option-btn" data-slot="04:30 PM">04:30 PM</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Reason for Visit -->
+                    <div class="mb-4">
+                        <label for="reason" class="form-label fw-bold text-dark">
+                            <i class="bi bi-chat-left-dots text-primary me-2"></i>4. Reason for Visit & Symptoms (Max 500 chars)
+                        </label>
+                        <textarea class="form-control" id="reason" name="reason" rows="3" maxlength="500" placeholder="Briefly describe symptoms, concerns, or reason for this visit..." required></textarea>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between pt-3 border-top">
+                        <a href="{{ url_for('patient_dashboard') }}" class="btn btn-light rounded-pill px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 fw-semibold shadow-sm">
+                            <i class="bi bi-check2-circle me-1"></i> Confirm Booking Request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date().toISOString().split('T')[0];
+    const dateInput = document.getElementById('appointment-date');
+    if (dateInput) {
+        dateInput.min = today;
+        dateInput.value = today;
+    }
+});
+</script>
+{% endblock %}

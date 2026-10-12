@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+
+{% block title %}Patient Dashboard - MedTrack{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="mb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div>
+                <span class="badge bg-primary-soft text-primary px-3 py-1 rounded-pill mb-2">Patient Portal</span>
+                <h2 class="fw-bold text-dark mb-1">Welcome back, {{ user.name }}</h2>
+                <p class="text-muted mb-0">Manage your consultations, digital health records, and clinical prescriptions.</p>
+            </div>
+            <div class="mt-3 mt-md-0 d-flex gap-2">
+                <a href="{{ url_for('book_appointment') }}" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                    <i class="bi bi-calendar-plus me-1"></i> Book Appointment
+                </a>
+                <a href="{{ url_for('view_appointment_patient') }}" class="btn btn-outline-secondary rounded-pill px-3">
+                    <i class="bi bi-calendar-check me-1"></i> My Appointments
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat Cards Grid -->
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card">
+                <div>
+                    <div class="stat-value">{{ stats.total_appointments }}</div>
+                    <div class="stat-label">Total Appointments</div>
+                </div>
+                <div class="stat-icon blue">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card">
+                <div>
+                    <div class="stat-value">{{ stats.upcoming_count }}</div>
+                    <div class="stat-label">Upcoming Visits</div>
+                </div>
+                <div class="stat-icon teal">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card">
+                <div>
+                    <div class="stat-value">{{ stats.reports_count }}</div>
+                    <div class="stat-label">Diagnosis Reports</div>
+                </div>
+                <div class="stat-icon purple">
+                    <i class="bi bi-file-earmark-medical"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card">
+                <div>
+                    <div class="stat-value">{{ stats.unread_notifications }}</div>
+                    <div class="stat-label">Unread Alerts</div>
+                </div>
+                <div class="stat-icon yellow">
+                    <i class="bi bi-bell"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Next Upcoming Appointment Section -->
+        <div class="col-lg-8">
+            <div class="med-card mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark mb-0">
+                        <i class="bi bi-calendar-event text-primary me-2"></i>Next Scheduled Appointment
+                    </h5>
+                    <a href="{{ url_for('view_appointment_patient') }}" class="small text-primary text-decoration-none fw-medium">View All</a>
+                </div>
+
+                {% if next_appointment %}
+                    <div class="p-4 bg-light rounded-3 border">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <h5 class="fw-bold text-dark mb-0">{{ next_appointment.doctor_name }}</h5>
+                                    <span class="badge badge-{{ next_appointment.status|lower }}">
+                                        {{ next_appointment.status }}
+                                    </span>
+                                </div>
+                                <div class="text-muted small mb-2">
+                                    <i class="bi bi-award me-1 text-primary"></i> {{ next_appointment.doctor_specialization }}
+                                    <span class="mx-2">•</span>
+                                    <i class="bi bi-building me-1"></i> {{ next_appointment.doctor_hospital }}
+                                </div>
+                                <div class="d-flex align-items-center gap-3 text-dark fw-medium small mb-2">
+                                    <span><i class="bi bi-calendar3 me-1 text-primary"></i> {{ next_appointment.date }}</span>
+                                    <span><i class="bi bi-clock me-1 text-primary"></i> {{ next_appointment.time_slot }}</span>
+                                </div>
+                                <div class="small text-muted mb-2">
+                                    <strong>Reason for visit:</strong> {{ next_appointment.reason }}
+                                </div>
+                                {% if next_appointment.status_reason %}
+                                    <div class="small text-danger">
+                                        <strong>Status note:</strong> {{ next_appointment.status_reason }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-flex flex-column gap-2 mt-2 mt-md-0">
+                                <a href="{{ url_for('view_appointment', appointment_id=next_appointment.id) }}" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                    View Details
+                                </a>
+                                {% if next_appointment.status in ['Pending', 'Confirmed'] %}
+                                    <form method="POST" action="{{ url_for('cancel_appointment', appt_id=next_appointment.id) }}" onsubmit="return confirm('Are you sure you wish to cancel this appointment?');">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill w-100">
+                                            Cancel
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center py-4 bg-light rounded-3 border">
+                        <i class="bi bi-calendar-x fs-2 text-muted mb-2 d-block"></i>
+                        <h6 class="fw-bold text-dark mb-1">No Upcoming Appointments</h6>
+                        <p class="text-muted small mb-3">You do not have any pending or confirmed visits scheduled.</p>
+                        <a href="{{ url_for('book_appointment') }}" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                            Schedule an Appointment Now
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Recent Clinical Reports -->
+            <div class="med-card mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark mb-0">
+                        <i class="bi bi-prescription2 text-secondary me-2"></i>Recent Clinical Reports & Prescriptions
+                    </h5>
+                    <a href="{{ url_for('view_appointment_patient') }}" class="small text-primary text-decoration-none fw-medium">All Consultations</a>
+                </div>
+
+                {% if recent_diagnoses %}
+                    <div class="d-flex flex-column gap-3">
+                        {% for report in recent_diagnoses %}
+                            <div class="p-3 bg-light rounded-3 border">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-bold text-dark">{{ report.doctor_name }} ({{ report.doctor_specialization }})</span>
+                                    <span class="badge bg-white border text-muted small">{{ report.created_at[:10] }}</span>
+                                </div>
+                                <div class="text-muted small mb-2">
+                                    <strong>Diagnosis:</strong> {{ report.diagnosis }}
+                                </div>
+                                <a href="{{ url_for('view_appointment', appointment_id=report.appointment_id) }}" class="btn btn-outline-primary btn-sm rounded-pill">
+                                    <i class="bi bi-file-text me-1"></i> View Full Prescription & Report
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-3 text-muted small">
+                        No clinical reports filed yet. Reports will appear here after consultations.
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- In-App Notification Center Section -->
+            <div class="med-card" id="notifications">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark mb-0">
+                        <i class="bi bi-bell text-warning me-2"></i>Recent Notifications
+                    </h5>
+                    {% if notifications %}
+                        <form method="POST" action="{{ url_for('mark_all_notifications_read') }}">
+                            <button type="submit" class="btn btn-sm btn-link text-primary text-decoration-none p-0">Mark All as Read</button>
+                        </form>
+                    {% endif %}
+                </div>
+
+                {% if notifications %}
+                    <div class="d-flex flex-column gap-2">
+                        {% for n in notifications %}
+                            <div class="notification-item {% if not n.is_read %}unread{% endif %}">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-bold text-dark small mb-1">{{ n.title }}</div>
+                                        <div class="text-muted smaller mb-0">{{ n.message }}</div>
+                                    </div>
+                                    <span class="smaller text-muted">{{ n.created_at[:10] }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-muted small text-center py-3">No notifications at this time.</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Health Profile Sidebar Widget -->
+        <div class="col-lg-4">
+            <div class="med-card mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h6 class="fw-bold text-dark mb-0">
+                        <i class="bi bi-person-lines-fill text-primary me-2"></i>Medical Profile
+                    </h6>
+                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold">{{ profile.blood_group or 'Unknown' }}</span>
+                </div>
+                
+                <div class="d-flex flex-column gap-2 small">
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                        <span class="text-muted">Date of Birth:</span>
+                        <span class="fw-medium text-dark">{{ profile.date_of_birth or '-' }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                        <span class="text-muted">Biological Sex:</span>
+                        <span class="fw-medium text-dark">{{ profile.gender or 'Not Specified' }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                        <span class="text-muted">Contact Phone:</span>
+                        <span class="fw-medium text-dark">{{ user.phone or '-' }}</span>
+                    </div>
+                    <div class="py-1 border-bottom">
+                        <div class="text-muted mb-1">Known Allergies:</div>
+                        <div class="text-dark fw-medium">{{ profile.allergies or 'None reported' }}</div>
+                    </div>
+                    <div class="py-1 border-bottom">
+                        <div class="text-muted mb-1">Medical Conditions:</div>
+                        <div class="text-dark fw-medium">{{ profile.conditions or 'No chronic conditions' }}</div>
+                    </div>
+                    <div class="py-1">
+                        <div class="text-muted mb-1">Current Medications:</div>
+                        <div class="text-dark fw-medium">{{ profile.medications or 'None' }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Search Widget -->
+            <div class="med-card bg-primary-light border-primary-soft">
+                <h6 class="fw-bold text-primary mb-2">
+                    <i class="bi bi-search me-1"></i> Find Medical Specialists
+                </h6>
+                <p class="small text-muted mb-3">
+                    Search doctors by specialty such as Cardiology, Neurology, or Pediatrics.
+                </p>
+                <a href="{{ url_for('search') }}" class="btn btn-outline-primary btn-sm w-100 rounded-pill">
+                    Browse Doctors Directory
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
