@@ -96,3 +96,20 @@
 2026-10-12 22:27:58,915 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
 2026-10-12 22:27:58,991 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
 2026-10-12 22:27:59,059 [INFO] medtrack: User signed in: chen@medtrack.com (doctor)
+2026-10-13 20:06:07,264 [INFO] medtrack: MedTrack Application initialized.
+2026-10-13 20:06:11,863 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-13 20:06:11,950 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-13 20:06:12,041 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_67748701)
+2026-10-13 20:06:12,110 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_4b8c6f8a)
+2026-10-13 20:06:12,210 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-13 20:06:12,315 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-13 20:06:12,319 [WARNING] medtrack: AWS SNS alert dispatch skipped / pending credentials: Unable to locate credentials
+2026-10-13 20:06:12,319 [INFO] medtrack: Appointment booked: apt_971bc208 (Doctor: usr_doc_001, Patient: usr_pat_001)
+2026-10-13 20:06:12,398 [INFO] medtrack: User signed in: doctor@medtrack.com (doctor)
+2026-10-13 20:06:12,401 [WARNING] medtrack: AWS SNS alert dispatch skipped / pending credentials: Unable to locate credentials
+2026-10-13 20:06:12,401 [INFO] medtrack: Appointment apt_971bc208 status changed from Pending to Confirmed
+2026-10-13 20:06:12,412 [WARNING] medtrack: AWS SNS alert dispatch skipped / pending credentials: Unable to locate credentials
+2026-10-13 20:06:12,413 [INFO] medtrack: Diagnosis submitted: diag_6c94fec8 for Appointment apt_971bc208
+2026-10-13 20:06:12,415 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
+2026-10-13 20:06:12,487 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-13 20:06:12,555 [INFO] medtrack: User signed in: chen@medtrack.com (doctor)

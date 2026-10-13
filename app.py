@@ -14,6 +14,7 @@ from flask import (
     flash, session, jsonify, abort
 )
 from werkzeug.security import generate_password_hash, check_password_hash
+import boto3
 
 # -----------------------------------------------------------------------------
 # 1. Environment & Logging Setup
@@ -54,6 +55,44 @@ class Config:
     SESSION_COOKIE_SAMESITE = 'Lax'
     APP_NAME = "MedTrack"
     APP_TAGLINE = "Cloud-enabled healthcare management made simple."
+
+# ------------ AWS CONNECTION ------------
+# It is better to rely on EC2 IAM Roles than hardcoded regions if possible
+REGION = os.environ.get("AWS_REGION", "ap-south-1")
+
+try:
+    dynamodb = boto3.resource('dynamodb', region_name=REGION)
+    sns = boto3.client('sns', region_name=REGION)
+
+    users_table = dynamodb.Table(os.environ.get('DYNAMODB_USERS_TABLE', 'MedTrack-Users'))
+    appointments_table = dynamodb.Table(os.environ.get('DYNAMODB_APPOINTMENTS_TABLE', 'MedTrack-Appointments'))
+    diagnoses_table = dynamodb.Table(os.environ.get('DYNAMODB_DIAGNOSES_TABLE', 'MedTrack-Diagnoses'))
+    notifications_table = dynamodb.Table(os.environ.get('DYNAMODB_NOTIFICATIONS_TABLE', 'MedTrack-Notifications'))
+except Exception as _aws_init_err:
+    dynamodb = None
+    sns = None
+    users_table = None
+    appointments_table = None
+    diagnoses_table = None
+    notifications_table = None
+
+SNS_TOPIC_ARN = os.environ.get("SNS_TOPIC_ARN", "arn:aws:sns:ap-south-1:336449003024:MedTrackNotifications")
+USE_AWS = os.environ.get("USE_AWS", "false").lower() in ["true", "1", "yes"]
+
+def publish_sns_alert(subject: str, message: str):
+    """Dispatches real-time notification alert via AWS SNS if configured."""
+    if sns and SNS_TOPIC_ARN:
+        try:
+            response = sns.publish(
+                TopicArn=SNS_TOPIC_ARN,
+                Subject=subject[:100],
+                Message=message
+            )
+            logger.info(f"AWS SNS Alert dispatched: {subject}")
+            return response
+        except Exception as err:
+            logger.warning(f"AWS SNS alert dispatch skipped / pending credentials: {err}")
+    return None
 
 # -----------------------------------------------------------------------------
 # 3. Domain Models & Helpers
@@ -441,6 +480,20 @@ class DataStore:
             )
             data["doctors"][user.id] = d.to_dict()
 
+        if USE_AWS and users_table:
+            try:
+                users_table.put_item(Item={
+                    "id": user.id,
+                    "name": user.name,
+                    "email": user.email,
+                    "phone": user.phone,
+                    "role": user.role,
+                    "created_at": user.created_at,
+                    **profile_data
+                })
+            except Exception as e:
+                logger.warning(f"AWS DynamoDB user write skipped: {e}")
+
         self._write_data(data)
         logger.info(f"User created: {user.email} (Role: {user.role}, ID: {user.id})")
         return user.id
@@ -567,6 +620,19 @@ class DataStore:
         }
 
         self._write_data(data)
+
+        if USE_AWS and appointments_table:
+            try:
+                appointments_table.put_item(Item=appointment.to_dict())
+            except Exception as e:
+                logger.warning(f"AWS DynamoDB appointment write skipped: {e}")
+
+        # Trigger AWS SNS Notification
+        publish_sns_alert(
+            "MedTrack: New Appointment Request",
+            f"New consultation booked for Dr. {doctor.get('name', 'Doctor')} on {appointment.date} at {appointment.time_slot}. Reason: {appointment.reason}"
+        )
+
         logger.info(f"Appointment booked: {appointment.id} (Doctor: {appointment.doctor_id}, Patient: {appointment.patient_id})")
         return appointment.id
 
@@ -664,6 +730,24 @@ class DataStore:
         }
 
         self._write_data(data)
+
+        if USE_AWS and appointments_table:
+            try:
+                appointments_table.update_item(
+                    Key={"id": appt_id},
+                    UpdateExpression="SET #s = :st, status_reason = :sr",
+                    ExpressionAttributeNames={"#s": "status"},
+                    ExpressionAttributeValues={":st": new_status, ":sr": status_reason}
+                )
+            except Exception as e:
+                logger.warning(f"AWS DynamoDB status update skipped: {e}")
+
+        # Trigger AWS SNS Notification
+        publish_sns_alert(
+            f"MedTrack: Appointment {new_status}",
+            f"Your appointment with Dr. {doc_user.get('name', 'Doctor')} on {appt['date']} has been updated to '{new_status}'."
+        )
+
         logger.info(f"Appointment {appt_id} status changed from {old_status} to {new_status}")
         return True
 
@@ -721,6 +805,19 @@ class DataStore:
         }
 
         self._write_data(data)
+
+        if USE_AWS and diagnoses_table:
+            try:
+                diagnoses_table.put_item(Item=report.to_dict())
+            except Exception as e:
+                logger.warning(f"AWS DynamoDB diagnosis write skipped: {e}")
+
+        # Trigger AWS SNS Notification
+        publish_sns_alert(
+            "MedTrack: Diagnosis Report Ready",
+            f"Dr. {doc_user.get('name', 'Doctor')} has filed your clinical diagnosis and prescription report #{report.id}."
+        )
+
         logger.info(f"Diagnosis submitted: {report.id} for Appointment {report.appointment_id}")
         return report.id
 
@@ -1554,8 +1651,9 @@ if __name__ == '__main__':
     debug = os.environ.get('FLASK_DEBUG', 'True').lower() in ['true', '1', 't']
     print("=" * 65)
     print("  MEDTRACK HEALTHCARE MANAGEMENT SYSTEM")
-    print(f"  Local Server Starting on http://127.0.0.1:{port}")
-    print("  Demo Doctor:  doctor@medtrack.com  /  Doctor@123")
-    print("  Demo Patient: patient@medtrack.com /  Patient@123")
+    print(f"  Local Access:      http://127.0.0.1:{port}")
+    print(f"  Network / Cloud:   http://0.0.0.0:{port} (Port {port})")
+    print("  Demo Doctor:       doctor@medtrack.com  /  Doctor@123")
+    print("  Demo Patient:      patient@medtrack.com /  Patient@123")
     print("=" * 65)
-    app.run(host='127.0.0.1', port=port, debug=debug)
+    app.run(host='0.0.0.0', port=port, debug=debug)
