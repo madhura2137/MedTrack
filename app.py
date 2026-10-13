@@ -57,29 +57,32 @@ class Config:
     APP_TAGLINE = "Cloud-enabled healthcare management made simple."
 
 # ------------ AWS CONNECTION ------------
-# It is better to rely on EC2 IAM Roles than hardcoded regions if possible
-REGION = os.environ.get("AWS_REGION", "ap-south-1")
+# SkillWallet task requirements:
+#   UsersTable:         partition key email (String)
+#   AppointmentsTable:  partition key appointment_id (String)
+# Troven Labs currently uses us-east-1. Do not put AWS credentials in this file;
+# boto3 will use the temporary lab credentials / attached IAM role.
+REGION = os.environ.get("AWS_REGION", "us-east-1").strip()
+SNS_REGION = os.environ.get("SNS_REGION", REGION).strip()
 
 try:
-    dynamodb = boto3.resource('dynamodb', region_name=REGION)
-    sns = boto3.client('sns', region_name=REGION)
-
-    users_table = dynamodb.Table(os.environ.get('DYNAMODB_USERS_TABLE', 'MedTrack-Users'))
-    appointments_table = dynamodb.Table(os.environ.get('DYNAMODB_APPOINTMENTS_TABLE', 'MedTrack-Appointments'))
-    diagnoses_table = dynamodb.Table(os.environ.get('DYNAMODB_DIAGNOSES_TABLE', 'MedTrack-Diagnoses'))
-    notifications_table = dynamodb.Table(os.environ.get('DYNAMODB_NOTIFICATIONS_TABLE', 'MedTrack-Notifications'))
+    dynamodb = boto3.resource("dynamodb", region_name=REGION)
+    users_table = dynamodb.Table(os.environ.get("DYNAMODB_USERS_TABLE", "UsersTable").strip())
+    appointments_table = dynamodb.Table(os.environ.get("DYNAMODB_APPOINTMENTS_TABLE", "AppointmentsTable").strip())
 except Exception as _aws_init_err:
+    logger.warning("AWS DynamoDB initialization deferred: %s", _aws_init_err)
     dynamodb = None
-    sns = None
     users_table = None
     appointments_table = None
-    diagnoses_table = None
-    notifications_table = None
 
-SNS_TOPIC_ARN = os.environ.get(
-    "SNS_TOPIC_ARN",
-    "arn:aws:sns:us-east-1:970547343422:MedTrackNotifications"
-).strip()
+try:
+    sns = boto3.client("sns", region_name=SNS_REGION)
+except Exception as _sns_init_err:
+    logger.warning("AWS SNS initialization deferred: %s", _sns_init_err)
+    sns = None
+
+# Set the exact topic ARN in .env. Keep it empty if SNS is not configured yet.
+SNS_TOPIC_ARN = os.environ.get("SNS_TOPIC_ARN", "").strip()
 USE_AWS = os.environ.get("USE_AWS", "false").lower() in ["true", "1", "yes"]
 
 def publish_sns_alert(subject: str, message: str):
@@ -626,7 +629,10 @@ class DataStore:
 
         if USE_AWS and appointments_table:
             try:
-                appointments_table.put_item(Item=appointment.to_dict())
+                # SkillWallet's partition key is appointment_id, not id.
+                aws_appointment = appointment.to_dict()
+                aws_appointment["appointment_id"] = str(aws_appointment.get("id", appointment.id))
+                appointments_table.put_item(Item=aws_appointment)
             except Exception as e:
                 logger.warning(f"AWS DynamoDB appointment write skipped: {e}")
 
@@ -737,7 +743,7 @@ class DataStore:
         if USE_AWS and appointments_table:
             try:
                 appointments_table.update_item(
-                    Key={"id": appt_id},
+                    Key={"appointment_id": str(appt_id)},
                     UpdateExpression="SET #s = :st, status_reason = :sr",
                     ExpressionAttributeNames={"#s": "status"},
                     ExpressionAttributeValues={":st": new_status, ":sr": status_reason}
@@ -809,11 +815,9 @@ class DataStore:
 
         self._write_data(data)
 
-        if USE_AWS and diagnoses_table:
-            try:
-                diagnoses_table.put_item(Item=report.to_dict())
-            except Exception as e:
-                logger.warning(f"AWS DynamoDB diagnosis write skipped: {e}")
+        # SkillWallet currently specifies only UsersTable and AppointmentsTable.
+        # Diagnosis reports remain in the local JSON datastore until a diagnosis
+        # table is explicitly required and created in the lab instructions.
 
         # Trigger AWS SNS Notification
         publish_sns_alert(
