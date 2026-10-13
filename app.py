@@ -76,7 +76,7 @@ except Exception as _aws_init_err:
     diagnoses_table = None
     notifications_table = None
 
-SNS_TOPIC_ARN = os.environ.get("SNS_TOPIC_ARN", "arn:aws:sns:us-east-1:970547343422:MedTrackNotifications:a8483fa2-3222-42dd-bd21-cf1bb758b932")
+SNS_TOPIC_ARN = os.environ.get("SNS_TOPIC_ARN", "").strip()
 USE_AWS = os.environ.get("USE_AWS", "false").lower() in ["true", "1", "yes"]
 
 def publish_sns_alert(subject: str, message: str):
@@ -1648,7 +1648,7 @@ sys.modules['app.models'] = sys.modules[__name__]
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    debug = os.environ.get('FLASK_DEBUG', 'True').lower() in ['true', '1', 't']
+    debug = os.environ.get('FLASK_DEBUG', 'False').lower() in ['true', '1', 't']
     print("=" * 65)
     print("  MEDTRACK HEALTHCARE MANAGEMENT SYSTEM")
     print(f"  Local Access:      http://127.0.0.1:{port}")
