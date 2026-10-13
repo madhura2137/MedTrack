@@ -76,7 +76,10 @@ except Exception as _aws_init_err:
     diagnoses_table = None
     notifications_table = None
 
-SNS_TOPIC_ARN = os.environ.get("SNS_TOPIC_ARN", "").strip()
+SNS_TOPIC_ARN = os.environ.get(
+    "SNS_TOPIC_ARN",
+    "arn:aws:sns:us-east-1:970547343422:MedTrackNotifications"
+).strip()
 USE_AWS = os.environ.get("USE_AWS", "false").lower() in ["true", "1", "yes"]
 
 def publish_sns_alert(subject: str, message: str):
