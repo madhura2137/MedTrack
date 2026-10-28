@@ -113,3 +113,75 @@
 2026-10-13 20:06:12,415 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
 2026-10-13 20:06:12,487 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
 2026-10-13 20:06:12,555 [INFO] medtrack: User signed in: chen@medtrack.com (doctor)
+2026-10-13 20:06:20,171 [INFO] medtrack: MedTrack Application initialized.
+2026-10-13 20:06:24,564 [INFO] medtrack: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.101:5000
+2026-10-13 20:06:24,564 [INFO] medtrack: [33mPress CTRL+C to quit[0m
+2026-10-13 20:06:24,566 [INFO] medtrack:  * Restarting with stat
+2026-10-13 20:06:24,849 [INFO] medtrack: MedTrack Application initialized.
+2026-10-13 20:06:29,132 [WARNING] medtrack:  * Debugger is active!
+2026-10-13 20:06:29,134 [INFO] medtrack:  * Debugger PIN: 109-284-219
+2026-10-13 20:06:37,644 [INFO] medtrack: 127.0.0.1 - - [13/Oct/2026 20:06:37] "GET / HTTP/1.1" 200 -
+2026-10-28 21:06:17,000 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:06:17,872 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:06:17,957 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:06:18,039 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_6057e214)
+2026-10-28 21:06:18,104 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_0d058f27)
+2026-10-28 21:06:18,167 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-28 21:06:18,260 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:06:26,811 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:06:27,357 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:06:27,442 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:06:27,518 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_4fa1fa61)
+2026-10-28 21:06:27,584 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_67793fe6)
+2026-10-28 21:06:27,664 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-28 21:06:27,741 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:06:36,704 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:06:37,189 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:06:37,282 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:06:37,372 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_786a9e40)
+2026-10-28 21:06:37,439 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_7bb548ac)
+2026-10-28 21:06:37,514 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-28 21:06:37,590 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:07:26,125 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:07:26,613 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:07:26,690 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:07:26,763 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_48ee485c)
+2026-10-28 21:07:26,824 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_0e896469)
+2026-10-28 21:07:26,885 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-28 21:07:26,953 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:07:42,741 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:07:43,244 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:07:43,320 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:07:43,394 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_47900a17)
+2026-10-28 21:07:43,457 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_083ab3da)
+2026-10-28 21:07:43,518 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-28 21:07:43,585 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:07:55,560 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:07:56,058 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:07:56,118 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:08:06,355 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:08:06,831 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:08:06,895 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:08:30,389 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:08:30,876 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:08:30,935 [INFO] medtrack: User signed in: chen@medtrack.com (doctor)
+2026-10-28 21:09:22,289 [INFO] medtrack: MedTrack Application initialized.
+2026-10-28 21:09:22,802 [INFO] medtrack: Demo database seeded successfully with mock patient and doctor records.
+2026-10-28 21:09:22,886 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:09:22,968 [INFO] medtrack: User created: alice.wonder@test.com (Role: patient, ID: usr_pat_1c1edccb)
+2026-10-28 21:09:23,067 [INFO] medtrack: User created: vance@test.com (Role: doctor, ID: usr_doc_39021184)
+2026-10-28 21:09:23,136 [INFO] medtrack: User signed in: vance@test.com (doctor)
+2026-10-28 21:09:23,246 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:09:23,251 [WARNING] medtrack: AWS SNS alert dispatch skipped / pending credentials: Unable to locate credentials
+2026-10-28 21:09:23,251 [INFO] medtrack: Appointment booked: apt_1ce92185 (Doctor: usr_doc_001, Patient: usr_pat_001)
+2026-10-28 21:09:23,346 [INFO] medtrack: User signed in: doctor@medtrack.com (doctor)
+2026-10-28 21:09:23,349 [WARNING] medtrack: AWS SNS alert dispatch skipped / pending credentials: Unable to locate credentials
+2026-10-28 21:09:23,349 [INFO] medtrack: Appointment apt_1ce92185 status changed from Pending to Confirmed
+2026-10-28 21:09:23,363 [WARNING] medtrack: AWS SNS alert dispatch skipped / pending credentials: Unable to locate credentials
+2026-10-28 21:09:23,363 [INFO] medtrack: Diagnosis submitted: diag_00ce18fc for Appointment apt_1ce92185
+2026-10-28 21:09:23,365 [INFO] medtrack: AUDIT LOG: Doctor usr_doc_001 performed 'view_appointment_details' on Patient usr_pat_001
+2026-10-28 21:09:23,446 [INFO] medtrack: User signed in: patient@medtrack.com (patient)
+2026-10-28 21:09:23,519 [INFO] medtrack: User signed in: chen@medtrack.com (doctor)

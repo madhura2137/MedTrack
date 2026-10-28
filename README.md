@@ -67,10 +67,10 @@ MedTrack/
 │   ├── view_appointment.html # Single appointment view with printable Rx prescription
 │   ├── view_appointment_doctor.html  # Doctor appointment queue & status modals
 │   └── view_appointment_patient.html # Patient consultation history & reschedule modal
-├── .env                       # Local environment configuration
+├── .env.example               # Environment template for deployment (local .env is gitignored)
 ├── app.log                    # Automated application event & audit log file
 ├── app.py                     # Unified Flask backend: models, datastore, auth & routes
-├── requirements.txt           # Python dependencies (Flask, Werkzeug, python-dotenv)
+├── requirements.txt           # Python dependencies (Flask, Gunicorn, Werkzeug, boto3)
 ├── test_app.py                # End-to-end automated test suite
 └── README.md                  # Project documentation
 ```
@@ -98,16 +98,19 @@ Verify all authentication, role isolation, slot conflict prevention, and clinica
 ```bash
 python test_app.py
 ```
-*Expected output: `Ran 5 tests in ~0.8s — OK`*
+*Expected output: `Ran 5 tests in ~0.9s — OK`*
 
 ### 5. Launch the Application
-```bash
-python app.py
-```
-Open your web browser and navigate to:
-```text
-http://127.0.0.1:5000
-```
+- **Local Development:**
+  ```bash
+  python app.py
+  ```
+  Open your web browser and navigate to: `http://127.0.0.1:5000`
+
+- **Production Deployment (Render / Linux):**
+  ```bash
+  gunicorn app:app
+  ```
 
 ---
 

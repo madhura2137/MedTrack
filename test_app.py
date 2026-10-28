@@ -2,6 +2,7 @@ import unittest
 import os
 import shutil
 import tempfile
+from datetime import datetime, timedelta
 from app import create_app, Config, DataStore
 
 class TestMedTrackApp(unittest.TestCase):
@@ -112,11 +113,13 @@ class TestMedTrackApp(unittest.TestCase):
 
     def test_04_full_consultation_lifecycle(self):
         """Test full workflow: Patient books -> Doctor confirms -> Doctor diagnoses -> Patient views report."""
+        future_date = (datetime.now() + timedelta(days=5)).strftime('%Y-%m-%d')
+
         # 1. Patient logs in and books appointment (FR-04)
         self.client.post('/login', data={'email': 'patient@medtrack.com', 'password': 'Patient@123'})
         res_book = self.client.post('/patient/book-appointment', data={
             'doctor_id': 'usr_doc_001',
-            'date': '2026-10-15',
+            'date': future_date,
             'time_slot': '11:30 AM',
             'reason': 'Annual cardiovascular checkup and blood pressure review'
         }, follow_redirects=True)
@@ -125,7 +128,7 @@ class TestMedTrackApp(unittest.TestCase):
         # Verify slot collision prevention: same slot cannot be booked again (FR-04)
         res_duplicate = self.client.post('/patient/book-appointment', data={
             'doctor_id': 'usr_doc_001',
-            'date': '2026-10-15',
+            'date': future_date,
             'time_slot': '11:30 AM',
             'reason': 'Trying to book duplicate slot'
         }, follow_redirects=True)
@@ -136,7 +139,7 @@ class TestMedTrackApp(unittest.TestCase):
         self.client.post('/login', data={'email': 'doctor@medtrack.com', 'password': 'Doctor@123'})
         db = DataStore()
         doc_appts = db.get_doctor_appointments('usr_doc_001')
-        test_appt = next(a for a in doc_appts if a['date'] == '2026-10-15')
+        test_appt = next(a for a in doc_appts if a['date'] == future_date)
         appt_id = test_appt['id']
 
         res_accept = self.client.post(f'/doctor/appointments/{appt_id}/status', data={'status': 'Confirmed'}, follow_redirects=True)
